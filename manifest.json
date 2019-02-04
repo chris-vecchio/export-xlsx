@@ -1,0 +1,48 @@
+{
+    "name": "Export-xlsx",
+    "version": "1.0",
+    "title": "Export-xlsx",
+    "author": {
+        "name": "Chris Vecchio",
+        "url": "https://github.com/chris-vecchio/"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/chris-vecchio/export-xlsx/blob/master/LICENSE"
+        }
+    ],
+    "dependencies": {
+        "highcharts": "6.1.0+",
+        "exporting": "6.1.0+",
+        "export-data": "6.1.0+",
+        "moment": "2.22.2+",
+        "xlsx": "0.14.0+"
+    },
+    "type": "plugin",
+    "description": "Add ability to export chart data to Excel .xlsx file",
+    "keywords": [
+        "export",
+        "data",
+        "excel",
+        "xlsx",
+        "dates"
+    ],
+    "homepage": "https://github.com/chris-vecchio/export-xlsx",
+    "docs": "https://github.com/chris-vecchio/export-xlsx",
+    "bugs": "https://github.com/chris-vecchio/export-xlsx/issues",
+    "download": "https://github.com/chris-vecchio/export-xlsx",
+    "demo": [
+        "",
+        ""
+    ],
+    "maintainers": [
+        {
+            "name": "Chris Vecchio",
+            "url": "https://github.com/chris-vecchio/"
+        }
+    ]
+}
+
+
+
