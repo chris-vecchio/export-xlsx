@@ -27,13 +27,15 @@ The latest code is available on github: [https://github.com/chris-vecchio/export
 The plugin adds the following new options to the native Highcharts exporting options.
 
 <table>
-<tbody>
+<thead>
 <tr>
 <th>Property</th>
 <th>Type</th>
 <th>Default</th>
 <th>Description</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td>cellDates</td>
 <td>boolean</td>
