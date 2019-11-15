@@ -37,46 +37,46 @@ The plugin adds the following new options to the native Highcharts exporting opt
 </thead>
 <tbody>
 <tr>
-<td>cellDates</td>
-<td>boolean</td>
-<td>true</td>
-<td>Check for and parse xAxis dates from chart HTML table</td>
+<td align="left">cellDates</td>
+<td align="left">boolean</td>
+<td align="left">true</td>
+<td align="left">Check for and parse xAxis dates from chart HTML table</td>
 </tr>
 <tr>
-<td colspan=4>worksheet</td>
+<td colspan=4 style="font-weight: bold;">worksheet</td>
 </tr>
 <tr>
-<td>autoFitColumns</td>
-<td>boolean</td>
-<td>false</td>
-<td>Enable auto column width calculation</td>
+<td align="left">autoFitColumns</td>
+<td align="left">boolean</td>
+<td align="left">false</td>
+<td align="left">Enable auto column width calculation</td>
 </tr>
 <tr>
-<td>categoryColumnTitle</td>
-<td>str</td>
-<td>undefined</td>
-<td>Category column title in Excel. Leave empty for Highcharts default</td>
+<td align="left">categoryColumnTitle</td>
+<td align="left">str</td>
+<td align="left">undefined</td>
+<td align="left">Category column title in Excel. Leave empty for Highcharts default</td>
 </tr>
 <tr>
-<td>dateFormat</td>
-<td>str</td>
-<td>m/d/yyyy</td>
-<td>Excel date format for category column in Excel</td>
+<td align="left">dateFormat</td>
+<td align="left">str</td>
+<td align="left">m/d/yyyy</td>
+<td align="left">Excel date format for category column in Excel</td>
 </tr>
 <tr>
-<td>name</td>
-<td>str</td>
-<td>Sheet1</td>
-<td>Excel worksheet name (Excel restricts name length to <= 31 characters)</td>
+<td align="left">name</td>
+<td align="left">str</td>
+<td align="left">Sheet1</td>
+<td align="left">Excel worksheet name (Excel restricts name length to <= 31 characters)</td>
 </tr>
 <tr>
-<td colspan=4>workbook</td>
+<td colspan=4 style="font-weight: bold;">workbook</td>
 </tr>
 <tr>
-<td>fileProperties</td>
-<td>object</td>
-<td>undefined</td>
-<td>Workbook file properties. See description of available properties <a href="https://docs.sheetjs.com/#workbook-file-properties">here.</a></td>
+<td align="left">fileProperties</td>
+<td align="left">object</td>
+<td align="left">undefined</td>
+<td align="left">Workbook file properties. See description of available properties <a href="https://docs.sheetjs.com/#workbook-file-properties">here.</a></td>
 </tr>
 </tbody>
 </table>
