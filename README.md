@@ -9,7 +9,7 @@ This plugin adds the capability to export from Highcharts to the Excel .xlsx for
 ### Requirements
 
 * Latest Highcharts (tested with 7.02), but should work with version 6.1.0+.
-* Latest Highcharts [exporting]https://code.highcharts.com/modules/exporting.js and [export-data]https://code.highcharts.com/modules/export-data.js modules.
+* Latest Highcharts [exporting](https://code.highcharts.com/modules/exporting.js) and [export-data](https://code.highcharts.com/modules/export-data.js modules).
 * [Moment.js](http://momentjs.com/) version 2.22.2+.
 * [SheetJS js-xlsx](https://github.com/SheetJS/js-xlsx) version 0.14.0+.
 **Note:** this plugin does NO verification of js-xlsx options specification. I recommend [google](https://www.google.com/), [stackoverflow](https://stackoverflow.com/questions/tagged/js-xlsx) or the official js-xlsx [docs](https://docs.sheetjs.com/) for js-xlsx questions.
@@ -89,11 +89,11 @@ Example options:
 ```javascript
 exporting: {
     xlsx: {
-        categoryColumnTitle: 'Month',
-        dateFormat: 'yyyy-mm',
         worksheet: {
-            name: 'CustomWorksheetName',
-            autoFitColumns: true
+            autoFitColumns: true,
+            categoryColumnTitle: 'Month',
+            dateFormat: 'yyyy-mm',
+            name: 'CustomWorksheetName'
         },
         workbook: {
             fileProperties: {
