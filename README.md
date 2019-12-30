@@ -1,4 +1,7 @@
-﻿# Export XLSX - Highcharts module
+﻿#### Update: December 30, 2019
+#### A new (improved) version of this plugin is available at [https://github.com/chris-vecchio/export-xlsx-exceljs](https://github.com/chris-vecchio/export-xlsx-exceljs). I will eventually replace this plugin with the new version. The new version removes the moment.js and jQuery requirements and uses [exceljs](https://github.com/exceljs/exceljs) for exporting. The exceljs library allows full customization of worksheets.
+
+# Export XLSX - Highcharts module
 
 This plugin adds the capability to export from Highcharts to the Excel .xlsx format.
 
