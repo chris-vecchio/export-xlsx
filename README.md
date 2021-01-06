@@ -26,7 +26,7 @@ This plugin adds the capability to export from Highcharts to the Excel .xlsx for
 
 ### Code
 
-The latest code is available on github: [https://github.com/chris-vecchio/export-xlsx-exceljs](https://github.com/chris-vecchio/export-xlsx-exceljs)
+The latest code is available on github: [https://github.com/chris-vecchio/export-xlsx](https://github.com/chris-vecchio/export-xlsx)
 
 ### Usage
 
