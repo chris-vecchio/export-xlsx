@@ -1,6 +1,6 @@
 {
     "name": "Export-xlsx",
-    "version": "1.04",
+    "version": "1.05",
     "title": "Export-xlsx",
     "author": {
         "name": "Chris Vecchio",
@@ -13,11 +13,11 @@
         }
     ],
     "dependencies": {
-        "highcharts": "6.1.0+",
-        "exporting": "6.1.0+",
-        "export-data": "6.1.0+",
-        "moment": "2.22.2+",
-        "xlsx": "0.14.0+"
+        "highcharts": "7.0.0+",
+        "exporting": "7.0.0+",
+        "export-data": "7.0.0+",
+        "exceljs": "3.5.0+",
+        "FileSaver": "2.0.2+"
     },
     "type": "plugin",
     "description": "Add ability to export chart data to Excel .xlsx file",
@@ -33,8 +33,7 @@
     "bugs": "https://github.com/chris-vecchio/export-xlsx/issues",
     "download": "https://github.com/chris-vecchio/export-xlsx",
     "demo": [
-        "https://jsfiddle.net/chrisvecchio/f2r7jqhz/",
-        ""
+        "https://jsfiddle.net/chrisvecchio/ds6ocjy0/"
     ],
     "maintainers": [
         {

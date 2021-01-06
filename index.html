@@ -6,17 +6,22 @@
     <title>Export XLSX Demo</title>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.0/xlsx.full.min.js"></script>
-    <script src="./js/exportxlsx.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@latest/dist/exceljs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@latest/dist/FileSaver.min.js"></script>
+    <script src="https://cdn.statically.io/gh/SheetJS/ssf/e267d1d6/ssf.js"></script>
+    <script src="./js/export-xlsx.js"></script>
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
     <div class="chart" id="chart-container-1"></div>
     <div class="chart" id="chart-container-2"></div>
+    <div class="chart" id="chart-container-3"></div>
+    <div class="chart" id="chart-container-4"></div>
+    <div class="chart" id="chart-container-5"></div>
     <script>
     $(document).ready(function() {
         var chartOptions1 = {
@@ -25,53 +30,35 @@
             },
             exporting: {
                 filename: 'export_xlsx_example',
-                xlsx: {
-                    worksheet: {
-                        autoFitColumns: true,
-                        categoryColumnTitle: 'Date',
-                        dateFormat: 'yyyy-mm',
-                        name: 'Export XLSX Test'
-                    },
-                    workbook: {
-                        fileProperties: {
-                            Author: "File Author",
-                            Company: "File Company",
-                            CreatedDate: new Date(Date.now())
+                csv: {
+                    // Test export-xlsx interface with columnHeaderFormatter function
+                    // The column headers in the exported workbook should be as follows:
+                    // FormatterName, Less than HS, HS, Some College Mod, Bachelor Degree & Higher Mod
+                    columnHeaderFormatter: function(item, key) {
+                        if (!item || item instanceof Highcharts.Axis) {
+                            return item.options.title.text || 'FormatterName';
+                        }
+                        // Item is not axis, now we are working with series.
+                        // Key is the property on the series we show in this column.
+                        else {
+                            return item.name + ' Mod';
                         }
                     }
                 },
-                buttons: {
-                    contextButton: {
-                        enabled: true,
-                        menuItems: [{
-                            text: 'Export XLSX',
-                            onclick: function() {
-                                this.downloadXLSX();
-                            }
-                        }, {
-                            text: 'Export CSV',
-                            onclick: function() {
-                                this.downloadCSV();
-                            }
-                        }, {
-                            text: 'Export PNG',
-                            onclick: function() {
-                                this.exportChart({
-                                    type: 'image/png'
-                                });
-                            }
-                        }, {
-                            text: 'Export PDF',
-                            onclick: function() {
-                                this.exportChart({
-                                    type: 'application/pdf'
-                                });
-                            }
-                        }]
+                xlsx: {
+                    worksheet: {
+                        autoFitColumns: true,
+                        categoryColumn: {
+                            numberFormat: 'yyyy-mm'
+                        }
+                    },
+                    workbook: {
+                        fileProperties: {
+                            creator: "File Author",
+                            company: "File Company",
+                            created: new Date(2017, 11, 31)
+                        }
                     }
-                },
-                csv: {
-                    // dateFormat: '%Y%m'
                 }
             },
             title: {
@@ -101,34 +88,42 @@
                 index: 0,
                 zIndex: 3,
                 legendIndex: 0,
-                name: 'Less than high school',
-                xlsxFormat: '0.0',
+                name: 'Less than High School',
+                xlsx: {
+                    numberFormat: '0.0',
+                    name: 'Less than HS'
+                },
                 data: [6.9, 7.3, 6.9, 7.1, 6.6, 6.7, 7.3, 6.5, 7.6, 7.3, 7.7, 7.7, 7.7, 7.4, 8.4, 7.7, 8.1, 8.7, 8.6, 9.7, 9.8, 10.3, 10.8, 11.1, 12.4, 13.2, 14.0, 14.9, 15.2, 15.6, 15.3, 15.6, 14.9, 15.2, 14.7, 15.0, 15.3, 15.8, 14.9, 14.7, 14.6, 14.2, 13.5, 14.1, 15.6, 15.0, 15.4, 15.0, 14.3, 14.0, 14.1, 14.7, 14.5, 14.4, 14.5, 14.1, 14.3, 13.5, 12.8, 13.7, 13.0, 13.1, 12.8, 12.5, 12.9, 12.6, 12.4, 11.8, 11.7, 12.1, 12.0, 11.8, 12.0, 11.3, 11.1, 11.6, 11.0, 10.7, 10.8, 11.1, 10.5, 10.9, 10.7, 9.8, 9.4, 9.8, 9.4, 8.7, 9.2, 9.2, 9.5, 9.2, 8.5, 8.1, 8.6, 8.6, 8.3, 8.2, 8.6, 8.5, 8.7, 8.2, 8.3, 7.9, 7.9, 7.6, 6.8, 6.5, 7.1, 7.0, 7.4, 7.6, 7.5, 7.6, 6.4, 7.4, 8.5, 7.5, 7.8, 7.6, 7.4, 7.6, 6.6, 6.4, 6.3, 6.5, 7.0, 6.1, 6.7, 6.0, 5.2, 6.3, 5.5, 5.6, 5.6, 5.8, 5.5, 5.6, 5.0, 5.7, 5.6, 5.9, 5.6, 5.8, 5.7]
             }, {
                 index: 1,
                 zIndex: 2,
                 legendIndex: 1,
+                xlsx: {
+                    numberFormat: '0',
+                    name: 'HS'
+                },
                 name: 'High School',
-                xlsxFormat: '0.0',
                 data: [4.3, 4.3, 4.0, 4.1, 4.4, 4.1, 4.6, 4.4, 4.5, 4.6, 4.5, 4.7, 4.7, 4.7, 5.1, 5.0, 5.0, 5.1, 5.4, 5.8, 6.2, 6.4, 7.0, 7.8, 8.2, 8.5, 9.2, 9.5, 10.0, 9.7, 9.5, 9.7, 10.6, 11.0, 10.3, 10.6, 10.2, 10.7, 11.0, 10.8, 10.9, 10.6, 10.0, 10.0, 9.7, 9.8, 10.0, 9.8, 9.5, 9.7, 9.7, 9.9, 9.6, 10.0, 9.1, 9.3, 9.4, 9.4, 8.8, 8.7, 8.5, 8.3, 8.1, 8.0, 8.3, 8.6, 8.5, 8.6, 8.5, 8.3, 8.0, 8.0, 8.1, 7.9, 7.7, 7.5, 7.3, 7.7, 7.5, 7.4, 7.6, 7.2, 7.2, 7.0, 6.5, 6.4, 6.3, 6.2, 6.5, 5.9, 6.1, 6.1, 5.4, 5.7, 5.7, 5.3, 5.4, 5.4, 5.3, 5.4, 5.8, 5.4, 5.5, 5.5, 5.3, 5.2, 5.5, 5.6, 5.2, 5.2, 5.3, 5.4, 5.1, 5.1, 5.1, 5.0, 5.3, 5.5, 5.0, 5.1, 5.2, 4.9, 4.9, 4.6, 4.7, 4.6, 4.5, 5.0, 4.4, 4.3, 4.4, 4.2, 4.4, 4.4, 4.3, 4.3, 3.9, 4.1, 4.0, 3.9, 3.7, 4.0, 3.5, 3.8, 3.8]
             }, {
                 index: 2,
                 zIndex: 1,
                 legendIndex: 2,
                 name: 'Some College',
-                xlsxFormat: '0.00',
+                xlsx: {
+                    numberFormat: '0.00'
+                },
                 data: [3.8, 3.6, 3.6, 3.6, 3.4, 3.5, 3.6, 3.6, 3.4, 3.5, 3.3, 3.8, 3.7, 3.8, 3.9, 4.0, 4.3, 4.3, 4.6, 4.9, 5.0, 5.2, 5.5, 5.7, 6.5, 7.3, 7.5, 7.7, 7.8, 8.1, 8.0, 8.1, 8.3, 8.7, 8.8, 8.7, 8.6, 8.1, 8.4, 8.4, 8.2, 8.1, 8.3, 8.7, 8.9, 8.2, 8.6, 8.1, 8.1, 7.9, 7.5, 7.5, 7.8, 8.3, 8.3, 8.3, 8.5, 8.1, 7.7, 7.6, 7.1, 7.2, 7.5, 7.6, 7.7, 7.3, 7.2, 6.7, 6.6, 6.9, 6.5, 6.9, 6.9, 6.5, 6.3, 6.4, 6.5, 6.5, 6.1, 6.1, 6.1, 6.4, 6.4, 6.2, 5.9, 6.0, 6.0, 5.7, 5.5, 5.2, 5.3, 5.3, 5.4, 4.9, 4.9, 5.0, 5.2, 5.0, 4.8, 4.7, 4.4, 4.2, 4.3, 4.3, 4.3, 4.4, 4.4, 4.2, 4.2, 4.2, 4.2, 4.2, 3.8, 4.2, 4.2, 4.2, 4.2, 3.9, 3.9, 3.8, 3.8, 4.0, 3.7, 3.7, 4.0, 3.8, 3.8, 3.7, 3.6, 3.7, 3.6, 3.6, 3.4, 3.5, 3.5, 3.4, 3.2, 3.3, 3.2, 3.5, 3.2, 3.0, 3.1, 3.3, 3.4]
             }, {
                 index: 3,
                 zIndex: 1,
                 legendIndex: 3,
                 name: 'Bachelor Degree & Higher',
-                // xlsxFormat: '0.0',
                 data: [2.1, 1.9, 1.8, 1.9, 2.0, 2.0, 2.1, 2.1, 2.0, 2.1, 2.2, 2.1, 2.1, 2.0, 2.1, 2.1, 2.2, 2.4, 2.5, 2.8, 2.6, 3.1, 3.2, 3.6, 3.9, 4.1, 4.3, 4.4, 4.8, 4.8, 4.8, 4.8, 5.0, 4.7, 4.8, 4.9, 4.9, 4.9, 4.9, 4.8, 4.6, 4.4, 4.5, 4.6, 4.5, 4.6, 5.0, 4.8, 4.3, 4.3, 4.4, 4.5, 4.5, 4.3, 4.2, 4.2, 4.2, 4.3, 4.4, 4.1, 4.3, 4.2, 4.1, 4.0, 3.9, 4.0, 4.1, 4.1, 4.0, 3.7, 3.9, 4.0, 3.8, 3.9, 3.8, 3.9, 3.9, 3.8, 3.8, 3.4, 3.7, 3.7, 3.4, 3.3, 3.3, 3.4, 3.4, 3.3, 3.2, 3.3, 3.1, 3.2, 2.9, 3.0, 3.2, 2.8, 2.8, 2.7, 2.4, 2.7, 2.8, 2.5, 2.5, 2.4, 2.5, 2.5, 2.6, 2.5, 2.5, 2.5, 2.6, 2.4, 2.5, 2.5, 2.5, 2.6, 2.5, 2.6, 2.4, 2.5, 2.5, 2.4, 2.4, 2.4, 2.3, 2.3, 2.3, 2.4, 2.3, 2.1, 2.1, 2.1, 2.2, 2.2, 2.2, 2.1, 2.0, 2.3, 2.2, 2.0, 2.0, 2.0, 2.2, 2.1, 2.4]
             }]
         };
-        var chart = new Highcharts.Chart('chart-container-1', chartOptions1);
+        var chart1 = new Highcharts.Chart('chart-container-1', chartOptions1);
 
+        // Chart 2 adapted from https://www.highcharts.com/demo/spline-plot-bands
         var chartOptions2 = {
             chart: {
                 type: 'spline',
@@ -139,45 +134,10 @@
                 xlsx: {
                     worksheet: {
                         autoFitColumns: true,
-                        dateFormat: 'm/d/yyyy h:mm am/pm',
-                        name: 'Wind Speed'
-                    },
-                    workbook: {
-                        fileProperties: {
-                            Author: "File Author",
-                            Company: "File Company",
-                            CreatedDate: new Date(Date.now())
+                        sheetName: 'Wind Speed',
+                        categoryColumn: {
+                            numberFormat: 'm/d/yyyy h:mm AM/PM'
                         }
-                    }
-                },
-                buttons: {
-                    contextButton: {
-                        enabled: true,
-                        menuItems: [{
-                            text: 'Export XLSX',
-                            onclick: function() {
-                                this.downloadXLSX();
-                            }
-                        }, {
-                            text: 'Export CSV',
-                            onclick: function() {
-                                this.downloadCSV();
-                            }
-                        }, {
-                            text: 'Export PNG',
-                            onclick: function() {
-                                this.exportChart({
-                                    type: 'image/png'
-                                });
-                            }
-                        }, {
-                            text: 'Export PDF',
-                            onclick: function() {
-                                this.exportChart({
-                                    type: 'application/pdf'
-                                });
-                            }
-                        }]
                     }
                 }
             },
@@ -219,6 +179,239 @@
             }]
         };
         var chart2 = new Highcharts.Chart('chart-container-2', chartOptions2);
+
+        // Chart 3 adapted from https://www.highcharts.com/demo/column-basic
+        var chartOptions3 = {
+            chart: {
+                type: 'column'
+            },
+            exporting: {
+                filename: 'export_xlsx_example',
+                xlsx: {
+                    worksheet: {
+                        sheetName: 'Monthly Rainfall',
+                        categoryColumn: {
+                            title: 'Month'
+                        },
+                        headerStyle: {
+                            font: {
+                                color: '#FFFFFF',
+                                bold: true
+                            },
+                            fill: {
+                                color: '#414b56'
+                            }
+                        }
+                    }
+                }
+            },
+            title: {
+                text: 'Monthly Average Rainfall'
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com'
+            },
+            xAxis: {
+                categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Rainfall (mm)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Tokyo',
+                xlsx: {
+                    numberFormat: '0',
+                },
+                data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+            }, {
+                name: 'New York',
+                data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+            }, {
+                name: 'London',
+                data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+            }, {
+                name: 'Berlin',
+                data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+
+            }]
+        };
+        var chart3 = new Highcharts.Chart('chart-container-3', chartOptions3);
+
+        // Chart 4 adapted from https://www.highcharts.com/demo/combo
+        var chartOptions4 = {
+            title: {
+                text: 'Combination chart'
+            },
+            xAxis: {
+                categories: ['Apples', 'Oranges', 'Pears', 'Bananas', 'Plums']
+            },
+            tooltip: {
+                formatter: function() {
+                    var s;
+                    if (this.point.name) { // the pie chart
+                        s = '' +
+                            this.point.name + ': ' + this.y + ' fruits';
+                    } else {
+                        s = '' +
+                            this.x + ': ' + this.y;
+                    }
+                    return s;
+                }
+            },
+            labels: {
+                items: [{
+                    html: 'Total fruit consumption',
+                    style: {
+                        left: '40px',
+                        top: '8px',
+                        color: 'black'
+                    }
+                }]
+            },
+            series: [{
+                type: 'column',
+                name: 'Jane',
+                data: [3, 2, 1, 3, 4]
+            }, {
+                type: 'column',
+                name: 'John',
+                data: [2, 3, 5, 7, 6]
+            }, {
+                type: 'column',
+                name: 'Joe',
+                data: [4, 3, 3, 9, 0]
+            }, {
+                type: 'spline',
+                name: 'Average',
+                data: [3, 2.67, 3, 6.33, 3.33]
+            }, {
+                type: 'pie',
+                name: 'Total consumption',
+                data: [{
+                    name: 'Jane',
+                    y: 13,
+                    color: '#4572A7' // Jane's color
+                }, {
+                    name: 'John',
+                    y: 23,
+                    color: '#AA4643' // John's color
+                }, {
+                    name: 'Joe',
+                    y: 19,
+                    color: '#89A54E' // Joe's color
+                }],
+                center: [100, 80],
+                size: 100,
+                showInLegend: false,
+                dataLabels: {
+                    enabled: false
+                }
+            }]
+        };
+        var chart4 = new Highcharts.Chart('chart-container-4', chartOptions4);
+
+        // Chart 5 adapted from https://www.highcharts.com/demo/pie-basic
+        var chartOptions5 = {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Browser market shares in January, 2018'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                xlsx: {
+                    numberFormat: '0.0'
+                },
+                data: [{
+                    name: 'Chrome',
+                    y: 61.41,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Internet Explorer',
+                    y: 11.84
+                }, {
+                    name: 'Firefox',
+                    y: 10.85
+                }, {
+                    name: 'Edge',
+                    y: 4.67
+                }, {
+                    name: 'Safari',
+                    y: 4.18
+                }, {
+                    name: 'Sogou Explorer',
+                    y: 1.64
+                }, {
+                    name: 'Opera',
+                    y: 1.6
+                }, {
+                    name: 'QQ',
+                    y: 1.2
+                }, {
+                    name: 'Other',
+                    y: 2.61
+                }]
+            }]
+        };
+        var chart5 = new Highcharts.Chart('chart-container-5', chartOptions5);
     });
     </script>
 </body>
